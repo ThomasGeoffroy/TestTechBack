@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+
+
+<html lang="fr">
+
+
+    <body>
+    <!-- Nav -->
+            <nav class="navbar" style="background-color: #e3f2fd;">
+
+            <div class="container-fluid">
+                <a class="center text-black text-decoration-none header-logo header-logo__title" href="/">GEM</a>
+
+                
+                    <ul class="nav justify-content-end">
+
+                    {% block menu %}
+
+
+                    {# {% if is_granted("IS_AUTHENTICATED_FULLY")%}
+
+                        {% if is_granted("ROLE_USER") %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" 
+                            {% if is_granted("ROLE_ADMIN") %} href="{{ path('app_back_main') }}"{% endif %}
+
+                            {% if is_granted("ROLE_PRESTA") %} href="{{ path('app_prestataire')}}" {% endif %}
+                            
+                            href="{{ path('app_front_customer')}}">{% if is_granted("ROLE_ADMIN") %}Backoffice {% else %} Mon espace {% endif %}
+                            </a>
+                        </li>  
+                        {% endif %}                     
+
+                    {% endif %} #}
+
+                        
+                    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="mx-3">
+                                    <span>
+                                        {{app.user.email}}
+                                    </span>
+                                    <i class="bi bi-person-square"></i>
+                            </li>
+                        </ul>
+                        <a href="{{ path('app_logout') }}" class="btn btn-danger me-2">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-danger me-2">Connexion</a>
+                        <a href="{{ path('app_register') }}" class="btn btn-danger me-2">S'inscrire</a>
+                    {% endif %}
+            </div>
+        </nav>
+
+        {# {% for flash in app.flashes('success') %}
+            <div class="alert alert-success">{{ flash }}</div>
+        {% endfor %}
+        {% for flash in app.flashes('error') %}
+            <div class="alert alert-danger">{{ flash }}</div>
+        {% endfor %} #}
+
+        {% endblock %}
+
+        {% block body %}
+
+<div class="container mt-3 mb-3">
+
+        <div class="row">
+
+
+            <div class="col-md-10">
+            <a href="{{ path('app_liste_etablissement') }}" class="text-decoration-none">
+            <h1 class="text-center text-black p-3" >Nos Articles</h1>
+            </a>
+                    <div class="grid">
+                    
+                            {% for article in articles %}
+                        <div class="col">
+                            <div class="card h-100">
+                            <img src={{ etablissement.picture }} class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ etablissement.name }}</h5>
+                                            <p class="card-text">{{ etablissement.address }}</p>
+                                            <p class="card-text">{{ etablissement.typeEtablissement }}</p>
+                                         
+                                </div>
+                                <a href="{{ path('app_etablissement_show', {'id': etablissement.id}) }}" class="btn btn-primary">Afficher</a> 
+                            </div>
+                        </div>       
+                            {% else %}
+                                <div>
+                                    <span colspan="9">no records found</span>
+                                </div>
+                            {% endfor %}
+
+                    </div>
+                 <a href="{{ path('app_liste_experience') }}" class="text-decoration-none">
+            
+                        </div>
+                        <a href="{{ path('app_experience_show', {'id': experience.id}) }}" class="btn btn-primary">Afficher</a>
+                    </div>
+                </div>
+                {% set displayed = true %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div>
+            <span colspan="9">no records found</span>
+        </div>
+    {% endfor %}
+</div>
+                    
+                
+</div>  
+                    
+            </div> 
+                   
+        </div>
+
+</div>      
+
+
+
+        {% endblock %}
+ 
+    </body>
+</html>
