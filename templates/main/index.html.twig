@@ -8,7 +8,7 @@
 
 
             <div class="col-md-10">
-            <a href="{{ path('app_liste_etablissement') }}" class="text-decoration-none">
+           
             <h1 class="text-center text-black p-3" >Nos Articles</h1>
             </a>
                     <div class="grid">
@@ -22,7 +22,7 @@
                                             <p class="card-text">{{ article.text }}</p>
                                          
                                 </div>
-                                <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Afficher</a> 
+                                {# <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Afficher</a>  #}
                             </div>
                         </div>       
                             {% else %}
@@ -32,20 +32,13 @@
                             {% endfor %}
 
                     </div>
-                 <a href="{{ path('app_liste_experience') }}" class="text-decoration-none">
+                
             
                         </div>
-                        <a href="{{ path('app_experience_show', {'id': experience.id}) }}" class="btn btn-primary">Afficher</a>
+                       
                     </div>
                 </div>
-                {% set displayed = true %}
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <div>
-            <span colspan="9">no records found</span>
-        </div>
-    {% endfor %}
+
 </div>
                     
                 
@@ -60,6 +53,3 @@
 
 
         {% endblock %}
- 
-    </body>
-</html>
