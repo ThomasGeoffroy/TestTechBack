@@ -51,8 +51,6 @@
                         <li class="nav-item">
                             <a class="nav-link" 
                             {% if is_granted("ROLE_ADMIN") %} href="{{ path('app_back_main') }}"{% endif %}
-
-                            {% if is_granted("ROLE_PRESTA") %} href="{{ path('app_prestataire')}}" {% endif %}
                             
                             href="{{ path('app_front_customer')}}">{% if is_granted("ROLE_ADMIN") %}Backoffice {% else %} Mon espace {% endif %}
                             </a>
@@ -71,10 +69,10 @@
                                     <i class="bi bi-person-square"></i>
                             </li>
                         </ul>
-                        <a href="" class="btn btn-danger me-2">Déconnexion</a>
+                        <a href="{{ path('app_logout')}}" class="btn btn-danger me-2">Déconnexion</a>
                     {% else %}
-                        <a href="" class="btn btn-danger me-2">Connexion</a>
-                        <a href="" class="btn btn-danger me-2">S'inscrire</a>
+                        <a href="{{ path('app_login')}}" class="btn btn-danger me-2">Connexion</a>
+                        <a href="{{ path('app_register')}}" class="btn btn-danger me-2">S'inscrire</a>
                     {% endif %}
             </div>
         </nav>
