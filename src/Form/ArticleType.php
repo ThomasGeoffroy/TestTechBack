@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,9 +16,14 @@ class ArticleType extends AbstractType
             ->add('title')
             ->add('author')
             ->add('text')
-            ->add('status')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    "Free" => 0,
+                    "Premium" => 1
+                ],
+                'multiple' => false,
+                'expanded' => true,
+            ]);
         ;
     }
 

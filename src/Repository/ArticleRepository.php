@@ -39,6 +39,19 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
+    public function articlesMainBackOffice(){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+            SELECT * FROM article
+            LIMIT 5
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+         return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */

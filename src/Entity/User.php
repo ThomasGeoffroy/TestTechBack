@@ -40,6 +40,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $status;
 
+    public function __toString()
+    {
+        return $this->getRoles();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

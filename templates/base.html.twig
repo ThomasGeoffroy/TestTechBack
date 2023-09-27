@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html>
-    <head>
 <!doctype html>
 <html lang="fr">
 
@@ -44,7 +41,7 @@
                     <ul class="nav justify-content-end">
 
 
-                    {# {% if is_granted("IS_AUTHENTICATED_FULLY")%}
+                    {% if is_granted("IS_AUTHENTICATED_FULLY")%}
 
                         {% if is_granted("ROLE_USER") %}
 
@@ -52,12 +49,12 @@
                             <a class="nav-link" 
                             {% if is_granted("ROLE_ADMIN") %} href="{{ path('app_back_main') }}"{% endif %}
                             
-                            href="{{ path('app_front_customer')}}">{% if is_granted("ROLE_ADMIN") %}Backoffice {% else %} Mon espace {% endif %}
+                            href="">{% if is_granted("ROLE_ADMIN") %}Backoffice {% else %} Mon espace {% endif %}
                             </a>
                         </li>  
                         {% endif %}                     
 
-                    {% endif %} #}
+                    {% endif %}
 
                         
                     {% if is_granted("IS_AUTHENTICATED_FULLY") %}

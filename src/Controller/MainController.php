@@ -15,10 +15,12 @@ class MainController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository): Response
     {
+        $user = $this->getUser();
 
         $articles = $articleRepository->findAll();
         return $this->render('main/index.html.twig', [
             "articles" => $articles,
+            "user" => $user
         ]);
     }
 }

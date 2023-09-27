@@ -1,55 +1,35 @@
 {% extends 'base.html.twig' %}
                
-        {% block body %}
-
+{% block body %}
 <div class="container mt-3 mb-3">
-
         <div class="row">
-
-
             <div class="col-md-10">
-           
             <h1 class="text-center text-black p-3" >Nos Articles</h1>
-            </a>
                     <div class="grid">
-                    
-                            {% for article in articles %}
+                        {% for article in articles %}
+                            {% if user.status is same as false %}
+                            
+                                {% if article.status is same as false %}                           
                         <div class="col">
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ article.title }}</h5>
-                                            <p class="card-text">{{ article.author }}</p>
-                                            <p class="card-text">{{ article.text }}</p>
-                                         
+                                        <p class="card-text">{{ article.author }}</p>
+                                        <p class="card-text">{{ article.text }}</p>
                                 </div>
                                 {# <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Afficher</a>  #}
                             </div>
                         </div>       
-                            {% else %}
+                                {% endif %}
+                                
+                            {% endif %}
+                        {% else %}
                                 <div>
                                     <span colspan="9">no records found</span>
                                 </div>
-                            {% endfor %}
-
+                        {% endfor %}
                     </div>
-                
-            
-                        </div>
-                       
-                    </div>
-                </div>
-
-</div>
-                    
-                
-</div>  
-                    
-            </div> 
-                   
+            </div>               
         </div>
-
-</div>      
-
-
-
-        {% endblock %}
+</div>
+{% endblock %}

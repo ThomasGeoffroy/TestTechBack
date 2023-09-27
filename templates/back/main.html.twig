@@ -1,41 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil - Barbiche back-office{% endblock %}
+{% block title %}Accueil - TechBack back-office{% endblock %}
 
 {% block body %}
     <div class="example-wrapper mb-3 mt-3">
         <h1 class="px-4"> Home </h1>
     </div>
     <div class="px-4">
-        <h2> Catégories </h2>
+        <h2> Articles </h2>
         <div>
-            <a class="my-2 btn btn-success" href="{{path("app_back_categories_list")}}" >Voir toutes les catégories </a>
+            <a class="my-2 btn btn-success" href="{{ path('app_back_article_index') }}" >Voir tout les articles</a>
         </div>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="w-25">Id de la catégorie</th>
-                    <th class="w-50">Nom</th>
-                    <th class="w-25">slug</th>
+                    <th class="w-25">Id de l'article</th>
+                    <th class="w-50">Auteur</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 {% for article in articles %}   
                 <tr>
-                        <td>{{category.id}}</td>
-                        <td>{{category.name}}</td>
-                        <td>{{category.slug}}</td>
+                        <td>{{article.id}}</td>
+                        <td>{{article.author}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 
-    {% if is_granted("ROLE_MANAGER") %}
         <div class= "center px-4">
             <h2> Utilisateurs </h2>
             <div>
-                <a class="my-2 btn btn-success" href="{{path("app_back_users_list")}}" >Voir tous les utilisateurs</a>
+                <a class="my-2 btn btn-success" href="{{ path('app_back_user_index') }}" >Voir tous les utilisateurs</a>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -58,9 +56,9 @@
                                         <td>{{user.id}}</td>
                                         <td>{{user.email}}</td>
                                         {% if user.status is same as "1" %}
-                                            <td>actif</td>
+                                            <td>abonné</td>
                                         {% else %}
-                                            <td>inactif</td>
+                                            <td>non-abonné</td>
                                         {% endif %}                
                                     </tr>
                             {% endif %}
@@ -81,6 +79,5 @@
                 </tbody>
             </table>
         </div>
-    {% endif %}
 
 {% endblock %}

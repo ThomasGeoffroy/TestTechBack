@@ -56,6 +56,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->add($user, true);
     }
 
+    public function usersMainBackOffice(){
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+            SELECT * FROM user
+            LIMIT 5
+        ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+         return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
