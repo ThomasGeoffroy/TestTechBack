@@ -7,14 +7,14 @@ use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use DateTime;
 use DateTimeImmutable;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 /**
- * @Route("/article")
+ * @Route("/back/article")
  */
 class ArticleController extends AbstractController
 {
@@ -23,10 +23,11 @@ class ArticleController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository): Response
     {
+        $articles = $articleRepository->findAll();
 
 
         return $this->render('back/article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articles,
         ]);
     }
 
@@ -57,12 +58,13 @@ class ArticleController extends AbstractController
     /**
      * @Route("/{id}", name="app_back_article_show", methods={"GET"})
      */
-    public function show(Article $article): Response
+    public function showback(Article $article): Response
     {
         return $this->render('back/article/show.html.twig', [
             'article' => $article,
         ]);
     }
+
 
     /**
      * @Route("/{id}/edit", name="app_back_article_edit", methods={"GET", "POST"})

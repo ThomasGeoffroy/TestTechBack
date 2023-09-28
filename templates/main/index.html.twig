@@ -9,25 +9,34 @@
                         {% for article in articles %}
                             {# {% if user.status is same as false %} #}
                             
-                                {% if article.status is same as false %}                           
+                                                         
                         <div class="col">
                             <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ article.title }}</h5>
+                                <div class="card-body">  
+                                    {% if article.status is same as false %}                       
+                                    <h5 id="free" class="card-title">{{ article.title }}</h5>
                                         <p class="card-text">{{ article.author }}</p>
                                         <p class="card-text">{{ article.text }}</p>
+                                     {% else %}
+                                    <h5 id="premium" class="card-title"><i class="bi bi-star"></i>{{ article.title }}</h5>                         
+                                        <p class="card-text">{{ article.author }}</p>
+                                        <p class="card-text">{{ article.text }}</p>
+                                    {% endif %}
+                                    <p class="card-text">{{ article.createdAt|format_datetime(locale='fr') }}</p>
                                 </div>
-                                {# <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Afficher</a>  #}
+                                <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Afficher</a> 
                             </div>
                         </div>       
-                                {% endif %}
-                                
-                            {# {% endif %} #}
+
                         {% else %}
                                 <div>
                                     <span colspan="9">no records found</span>
                                 </div>
                         {% endfor %}
+
+                        <div class="navigation">
+                            {{ knp_pagination_render(articles) }}
+                        </div>
                     </div>
             </div>               
         </div>

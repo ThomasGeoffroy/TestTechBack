@@ -20,7 +20,7 @@ class AppFixtures extends Fixture
     
     
             // creation of the category class to populate
-            $populator->addEntity(Article::class, 15,
+            $populator->addEntity(Article::class, 50,
             [
                 "title" => function () use ($faker) {
                     return $faker->text(15);
@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
                     return $faker->numberBetween(0,1);
                 },
                 "text" => function () use ($faker) {
-                    return $faker->text(200);
+                    return $faker->text(800);
                 },
                 "author" => function () use ($faker) {
                     return $faker->name();
