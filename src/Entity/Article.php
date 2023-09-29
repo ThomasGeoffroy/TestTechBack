@@ -47,6 +47,16 @@ class Article
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Order::class, mappedBy="articleId", cascade={"persist", "remove"})
+     */
+    private $articleOrder;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $price;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +130,35 @@ class Article
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getArticleOrder(): ?Order
+    {
+        return $this->articleOrder;
+    }
+
+    public function setArticleOrder(Order $articleOrder): self
+    {
+        // set the owning side of the relation if necessary
+        if ($articleOrder->getArticleId() !== $this) {
+            $articleOrder->setArticleId($this);
+        }
+
+        $this->articleOrder = $articleOrder;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

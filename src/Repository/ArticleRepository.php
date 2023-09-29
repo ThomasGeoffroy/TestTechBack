@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Order;
 use App\Entity\User;
 use App\Services\StripeService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -85,8 +86,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function create_subscription(array $ressource, Article $article, User $user)
     {
         $order = new Order();
-        $order->setUser($user);
-        $order->setArticle($article);
+        $order->setUserId($user);
+        $order->setArticleId($article);
         $order->setPrice($article->getPrice());
 
     }
