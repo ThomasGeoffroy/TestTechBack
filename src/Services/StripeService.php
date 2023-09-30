@@ -10,11 +10,16 @@ class StripeService {
 
     public function __construct()
     {
-        $this->privateKey = $_ENV['STRIPE_SECRET_KEY_TEST'];
+        if($_ENV['APP_ENV'] === 'dev') {
+            $this->privateKey = $_ENV['STRIPE_SECRET_KEY_TEST'];
+        } else {
+            $this->privateKey = $_ENV['STRIPE_SECRET_KEY_LIVE'];
+        }
+        
     }
 
     public function paymentIntent(Article $article) {
-        \Stripe\Stripe::setApiKey($privateKey);
+        \Stripe\Stripe::setApiKey($this->privateKey);
 
         return \Stripe\PaymentIntent::create([
             'amount' => 400,
@@ -27,32 +32,35 @@ class StripeService {
         $amount,
         $currency,
         $description,
-        array $stipeParameter
+        array $stripeParameter
     )
     {
-        \Stripe\Stripe::setApiKey($privateKey);
-        $payment_intent =null;
-
-        if(isset($stipeParameter['stripeIntentId'])){
-            $payment_intent = \Stripe\PaymentIntent::retrieve($stipeParameter['stripeIntentId']);
+        \Stripe\Stripe::setApiKey($this->privateKey);
+    
+        $payment_intent = null;
+    
+        if (isset($stripeParameter['stripeIntentId'])) {
+            $payment_intent = \Stripe\PaymentIntent::retrieve($stripeParameter['stripeIntentId']);
         }
-            if($stipeParameter['stripeIntentId'] === 'succeeded'){
-
-            }else{
-                $payment_intent->cancel();
-            }
-
+    
+        if ($payment_intent && $payment_intent->status === 'succeeded') {
+            // Handle successful payment.
+        } elseif ($payment_intent) {
+            // Handle payment cancellation or failure.
+            $payment_intent->cancel();
+        }
+    
         return $payment_intent;
     }
 
 
-    public function stripe(array $stipeParameter, Article $article){
+    public function stripe(array $stripeParameter, Article $article){
 
         return $this->payment(
             400,
             'eur',
             $article->getId(),
-            $stipeParameter
+            $stripeParameter
         );
     }
 }

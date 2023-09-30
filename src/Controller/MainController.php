@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-
+use App\Entity\User;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +18,8 @@ class MainController extends AbstractController
     public function index(Request $request ,ArticleRepository $articleRepository, PaginatorInterface $paginator): Response
     {
         $user = $this->getUser();
+
+        
 
 
         $articles = $articleRepository->findAll();

@@ -6,7 +6,10 @@ use App\Entity\Article;
 use App\Entity\Order;
 use App\Entity\User;
 use App\Services\StripeService;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,12 +23,11 @@ use Doctrine\Persistence\ManagerRegistry;
 class ArticleRepository extends ServiceEntityRepository
 {
 
-    protected $stripeService;
 
-    public function __construct(ManagerRegistry $registry, StripeService $stripeService)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Article::class);
-        $this->stripeService = $stripeService;
+
     }
 
     public function add(Article $entity, bool $flush = false): void
@@ -59,38 +61,6 @@ class ArticleRepository extends ServiceEntityRepository
          return $resultSet->fetchAllAssociative();
     }
 
-
-    public function intentSecret(Article $article){
-        $intent = $this->stripeService()->paymentIntent($article);
-
-        return $intent['client_secret'] ?? null;
-    }
-
-    public function stripe(array $stripeParameter, Article $article)
-    {
-        $data = $this->stripeService()->stripe($stripeParameter, $article);
-
-        if($data) {
-            $ressource = [
-                'stripeBrand' => $data['charges']['data'][0]['payment_method_details']['card']['brand'],
-                'stripeLast4' => $data['charges']['data'][0]['payment_method_details']['card']['last4'],
-                'stripeId' => $data['charges']['data'][0]['id'],
-                'stripeStatus' => $data['charges']['data'][0]['id']['status'],
-                'stripeToken' => $data['client_secret'],
-            
-            ];
-        }
-        return $ressource;
-    }
-
-    public function create_subscription(array $ressource, Article $article, User $user)
-    {
-        $order = new Order();
-        $order->setUserId($user);
-        $order->setArticleId($article);
-        $order->setPrice($article->getPrice());
-
-    }
 
 //    /**
 //     * @return Article[] Returns an array of Article objects

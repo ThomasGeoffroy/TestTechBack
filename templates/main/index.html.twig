@@ -18,9 +18,11 @@
                                         <p class="card-text">{{ article.author }}</p>
                                         <p class="card-text">{{ article.text }}</p>
                                      {% else %}
-                                    <h5 id="premium" class="card-title"><i class="bi bi-star"></i>{{ article.title }}</h5>                         
+
+                                        <h5 id="premium" class="card-title"><i class="bi bi-star"></i>{{ article.title }}</h5>                         
                                         <p class="card-text">{{ article.author }}</p>
-                                        <p class="card-text">{{ article.text }}</p>
+                                        <p class="card-text"> Vous devez acheter cet article pour le consulter</p>
+
                                     {% endif %}
                                     <p class="card-text">{{ article.createdAt|format_datetime(locale='fr') }}</p>
                                 </div>
