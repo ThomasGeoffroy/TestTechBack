@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
     /**
-     * @Route("/article/{id}", name="payment", methods={"GET","POST"})
+     * @Route("/payment/article/{id}", name="payment", methods={"GET","POST"})
      */
     public function payment(Article $article, ArticleManager $articleManager): Response
     {
@@ -22,7 +22,7 @@ class DashboardController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('front/articleshow.html.twig', [
+        return $this->render('payments/checkout.html.twig', [
             'user' => $this->getUser(),
             'intentSecret' => $articleManager->intentSecret($article),
             'article' =>$article,

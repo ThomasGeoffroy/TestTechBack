@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -38,6 +39,20 @@ class OrderRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    
+    // Custom method to find purchased articles by user
+    public function findPurchasedArticlesByUser(User $user)
+    {
+        return $this->createQueryBuilder('o')
+            ->join('o.articleId', 'a')
+            ->where('o.userId = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
 //    /**
 //     * @return Order[] Returns an array of Order objects

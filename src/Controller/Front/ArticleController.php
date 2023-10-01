@@ -16,25 +16,29 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ArticleController extends AbstractController
 {
-
     /**
      * @Route("/{id}", name="app_article_show", methods={"GET"})
      */
-    public function show(Article $article, User $user, OrderRepository $orderRepository): Response
+    public function show(Article $article, OrderRepository $orderRepository): Response
     {
         // Get the current user
         $currentUser = $this->getUser();
 
-        // Check if the current user has paid for the article
-        $hasPaid = $orderRepository->findOneBy(['userId' => $currentUser, 'articleId' => $article]);
+        // dd($currentUser);
 
-        dd($hasPaid);
+        if ($currentUser) {
+            $purchasedArticles = $orderRepository->findPurchasedArticlesByUser($currentUser);
 
-        // Set 'hasPaid' as a template variable
+            $articleIds = array_map(function ($order) {
+                return $order->getArticleId()->getId();
+            }, $purchasedArticles);
+        }
+
+        // dd($articleIds);
+
         return $this->render('front/articleshow.html.twig', [
             'article' => $article,
-            'hasPaid' => $hasPaid,
+            'articleIds' => $articleIds
         ]);
     }
-
 }
