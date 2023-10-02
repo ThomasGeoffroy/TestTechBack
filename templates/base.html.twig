@@ -1,19 +1,85 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<!doctype html>
+<html lang="fr">
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <!-- Bootstrap icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <!-- Our custom CSS -->
+        <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}">
+        <!-- favicon -->
+        <link rel="shortcut icon" href="" type="image/x-icon">
+    
+        <script src="https://js.stripe.com/v3"></script>
+
+
+        <title> {% block title %}Test TechBack{% endblock %}</title>
     </head>
     <body>
+
+    {% block menu %}
+    <!-- Nav -->
+            <nav class="navbar" style="background-color: #e3f2fd;">
+
+            <div class="container-fluid">
+                <a class="center text-black text-decoration-none header-logo header-logo__title" href="/">TechBack</a>
+
+                
+                    <ul class="nav justify-content-end">
+
+
+                    {% if is_granted("IS_AUTHENTICATED_FULLY")%}
+
+                        {% if is_granted("ROLE_USER") %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" 
+                            {% if is_granted("ROLE_ADMIN") %} href="{{ path('app_back_main') }}"{% endif %}
+                            
+                            href="">{% if is_granted("ROLE_ADMIN") %}Backoffice {% else %} Mon espace {% endif %}
+                            </a>
+                        </li>  
+                        {% endif %}                     
+
+                    {% endif %}
+
+                        
+                    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="mx-3">
+                                    <span>
+                                        {# {{app.user.email}} #}
+                                    </span>
+                                    <i class="bi bi-person-square"></i>
+                            </li>
+                        </ul>
+                        <a href="{{ path('app_logout')}}" class="btn btn-danger me-2">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login')}}" class="btn btn-danger me-2">Connexion</a>
+                        <a href="{{ path('app_register')}}" class="btn btn-danger me-2">S'inscrire</a>
+                    {% endif %}
+            </div>
+        </nav>
+
+        {# {% for flash in app.flashes('success') %}
+            <div class="alert alert-success">{{ flash }}</div>
+        {% endfor %}
+        {% for flash in app.flashes('error') %}
+            <div class="alert alert-danger">{{ flash }}</div>
+        {% endfor %} #}
+
+        {% endblock %}
         {% block body %}{% endblock %}
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+
     </body>
 </html>

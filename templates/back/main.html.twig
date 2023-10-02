@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - TechBack back-office{% endblock %}
+
+{% block body %}
+    <div class="example-wrapper mb-3 mt-3">
+        <h1 class="px-4"> Gestions des Entités </h1>
+    </div>
+    <div class="px-4">
+        <h2> Articles </h2>
+        <div>
+            <a class="my-2 btn btn-success" href="{{ path('app_back_article_index') }}" >Voir tout les articles</a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="w-25">Id de l'article</th>
+                    <th class="w-50">Auteur</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}   
+                <tr>
+                        <td>{{article.id}}</td>
+                        <td>{{article.author}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+        <div class= "center px-4">
+            <h2> Utilisateurs </h2>
+            <div>
+                <a class="my-2 btn btn-success" href="{{ path('app_back_user_index') }}" >Voir tous les utilisateurs</a>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="w-25">Id de l'utilisateur</th>
+                        <th class="w-50">Email</th>
+                        <th class="w-25">Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# Implement of a restriction for managers, that can't see and interact with manager and admin users in the backoffice #}
+                    {% for user in users %}
+                        {# if the logged user is an admin #}
+                        {% if is_granted("ROLE_ADMIN") %}
+                            {# if the role of our user variable is not empty #}
+                            {# => if the users are managers or users #}
+                            {% if user.roles is not same as "[]" %}
+                            {# we display them for the admin to see#}
+                                    <tr>
+                                        <td>{{user.id}}</td>
+                                        <td>{{user.email}}</td>
+                                        {% if user.status is same as "1" %}
+                                            <td>abonné</td>
+                                        {% else %}
+                                            <td>non-abonné</td>
+                                        {% endif %}                
+                                    </tr>
+                            {% endif %}
+                        {% endif %}
+                        {# Then we display the client users that the managers can also see #}
+                        {% if user.roles is same as "[]" %}
+                            <tr>
+                                <td>{{user.id}}</td>
+                                <td>{{user.email}}</td>
+                                {% if user.status is same as "1"%}
+                                    <td>actif</td>
+                                {% else %}
+                                    <td>inactif</td>
+                                {% endif %}                  
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+{% endblock %}
