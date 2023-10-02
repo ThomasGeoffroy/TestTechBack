@@ -33,7 +33,10 @@ class AppFixtures extends Fixture
                 },
                 "author" => function () use ($faker) {
                     return $faker->name();
-                }
+                },
+                "price" => function () use ($faker) {
+                    return $faker->numberBetween(4);
+                },
             ]
             );
     

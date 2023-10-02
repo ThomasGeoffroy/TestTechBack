@@ -2,7 +2,7 @@
                
 {% block body %}
 <div class="container mt-3 mb-3">
-        <div class="row">
+        
             <div class="col-md-10">
             <h1 class="text-center text-black p-3" >Nos Articles</h1>
                     <div class="grid">
@@ -14,9 +14,8 @@
                                     {% if article.status is same as false %}
                                             
                                     <h5 id="free" class="card-title">{{ article.title }}</h5>
-                                        <p class="card-text">{{ article.author }}</p>
-                                        <p class="card-text">{{ article.text }}</p>
-
+                                        <p class="card-text">Auteur : {{ article.author }}</p>
+                                        <p class="card-text">{{ article.text|slice(0, 100) }}{% if article.text|length > 100 %}(...){% endif %}</p>
                                     <p class="card-text">{{ article.createdAt|format_datetime(locale='fr') }}</p>
                                 </div>
 
@@ -27,16 +26,17 @@
                                             {% if article.id in articleIds %}
 
                                                 <h5 id="premium" class="card-title"><i class="bi bi-star"></i>{{ article.title }}</h5>                         
-                                                    <p class="card-text">{{ article.author }}</p>
-                                                    <p class="card-text">{{ article.text }}</p>
+                                                    <p class="card-text">Auteur : {{ article.author }}</p>
+                                                    <p class="card-text">{{ article.text|slice(0, 100) }}{% if article.text|length > 100 %}(...){% endif %}</p>
+                                                
                                                 <p class="card-text">{{ article.createdAt|format_datetime(locale='fr') }}</p>
                                             </div>
                                             <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Afficher</a>
                                             {% else %}
 
                                                 <h5 id="premium" class="card-title"><i class="bi bi-star"></i>{{ article.title }}</h5>                         
-                                                    <p class="card-text">{{ article.author }}</p>
-                                                    <p class="card-text"> Vous devez acheter cet article pour le consulter</p>
+                                                    <p class="card-text">Auteur : {{ article.author }}</p>
+                                                    <p class="card-text"> Vous devez acheter cet article pour le consulter </p>
                                                     <p class="card-text">{{ article.createdAt|format_datetime(locale='fr') }}</p>
                                             </div>
                                             <a href="{{ path('payment', {'id': article.id}) }}" class="btn btn-primary">Acheter pour consulter</a>
@@ -46,12 +46,12 @@
                                         {% else %}
                                             
                                         <h5 id="premium" class="card-title"><i class="bi bi-star"></i>{{ article.title }}</h5>                         
-                                        <p class="card-text">{{ article.author }}</p>
-                                        <p class="card-text"> Vous devez acheter cet article pour le consulter</p>
+                                        <p class="card-text">Auteur : {{ article.author }}</p>
+                                        <p class="card-text"> Vous devez acheter cet article pour le consulter </p>
                                         <p class="card-text">{{ article.createdAt|format_datetime(locale='fr') }}</p>
                                         </div>
 
-                                        <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Afficher</a> 
+                                        <a href="{{ path('payment', {'id': article.id}) }}" class="btn btn-primary">Acheter pour consulter</a> 
                                         
                                         {% endif %}
                                     {% endif %}
@@ -69,6 +69,6 @@
                         </div>
                     </div>
             </div>               
-        </div>
+        
 </div>
 {% endblock %}

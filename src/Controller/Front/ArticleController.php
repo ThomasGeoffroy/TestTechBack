@@ -30,15 +30,23 @@ class ArticleController extends AbstractController
             $purchasedArticles = $orderRepository->findPurchasedArticlesByUser($currentUser);
 
             $articleIds = array_map(function ($order) {
-                return $order->getArticleId()->getId();
+                return $order->getArticle()->getId();
             }, $purchasedArticles);
         }
 
-        // dd($articleIds);
+        if (empty ($articleIds)) {
 
-        return $this->render('front/articleshow.html.twig', [
-            'article' => $article,
-            'articleIds' => $articleIds
-        ]);
+            return $this->render('front/articleshow.html.twig', [
+                'article' => $article,
+            ]);
+            # code...
+        } else {
+
+            return $this->render('front/articleshow.html.twig', [
+                'article' => $article,
+                'articleIds' => $articleIds
+            ]);
+        }
+
     }
 }

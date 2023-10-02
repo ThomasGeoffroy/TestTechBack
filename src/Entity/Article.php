@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,15 +49,21 @@ class Article
      */
     private $updatedAt;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Order::class, mappedBy="articleId", cascade={"persist", "remove"})
-     */
-    private $articleOrder;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $price;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="article")
+     */
+    private $articleOrder;
+
+    public function __construct()
+    {
+        $this->articleOrder = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,22 +142,6 @@ class Article
         return $this;
     }
 
-    public function getArticleOrder(): ?Order
-    {
-        return $this->articleOrder;
-    }
-
-    public function setArticleOrder(Order $articleOrder): self
-    {
-        // set the owning side of the relation if necessary
-        if ($articleOrder->getArticleId() !== $this) {
-            $articleOrder->setArticleId($this);
-        }
-
-        $this->articleOrder = $articleOrder;
-
-        return $this;
-    }
 
     public function getPrice(): ?int
     {
@@ -159,6 +151,36 @@ class Article
     public function setPrice(?int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getArticleOrder(): Collection
+    {
+        return $this->articleOrder;
+    }
+
+    public function addArticleOrder(Order $articleOrder): self
+    {
+        if (!$this->articleOrder->contains($articleOrder)) {
+            $this->articleOrder[] = $articleOrder;
+            $articleOrder->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleOrder(Order $articleOrder): self
+    {
+        if ($this->articleOrder->removeElement($articleOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($articleOrder->getArticle() === $this) {
+                $articleOrder->setArticle(null);
+            }
+        }
 
         return $this;
     }

@@ -14,11 +14,11 @@
                     <script src="https://js.stripe.com/v3"></script>
 
                     <div id="card-errors" role="alert"></div>
-
+                <button class="btn btn-primary"> Acheter {{article.price}} € </button>
                 </div>
             </form>
             </div>
-            <button class="btn btn-primary"> Acheter {{article.price}} € </button>
+            
         </div>
     </div>
 </div>
@@ -28,10 +28,31 @@
 {% block javascripts %}
 <script>
 
+        document.addEventListener("DOMContentLoaded", function () {
+            // Wait for the document to load
+
+            // Check if the Stripe.js script has loaded
+            if (typeof Stripe !== "undefined") {
+                // Your public key
+                var stripePublicKey = "{{ stripe_public_key_test }}"; // Replace with your public key
+
+                // Initialize Stripe with your public key
+                var stripe = Stripe(stripePublicKey);
+
+                // Create an instance of Stripe Elements
+                var elements = stripe.elements();
+
+                // Now you can use 'stripe' and 'elements' to work with Stripe Elements
+            } else {
+                // Stripe.js script not loaded, handle the error
+                console.error("Stripe.js script has not loaded.");
+            }
+        });
+
     {% if app_environement == 'dev' %}
-        var stripeToken = "{{stripe_public_key_test}}";
+        var stripeToken = "{{ stripe_public_key_test }}";
     {% else %}
-        var stripeToken = "{{stripe_public_key_live}}";
+        var stripeToken = "{{ stripe_public_key_live }}";
     {% endif %}
     
     var stripe = Stripe(stripeToken);
@@ -50,7 +71,7 @@
         }
     }
 
-    var card = elements.create('card', {style: styleCustom });
+    var card = elements.create("card", {style: styleCustom });
     card.mount("#card-elements");
     
     card.addEventListener('change', function(event){
@@ -82,7 +103,7 @@
         ).then((result) => {
             if(result.error) {
                 // Display error
-            } else if ('paymentIntent' in result){
+            } else if ('paymentIntent' in result) {
                 console.log('Result :', result);
                 stripeTokenHandler(result.paymentIntent);
 

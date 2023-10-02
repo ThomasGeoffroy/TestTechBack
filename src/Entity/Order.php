@@ -24,11 +24,6 @@ class Order
      */
     private $userId;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Article::class, inversedBy="articleOrder", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $articleId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -70,6 +65,12 @@ class Order
      */
     private $price;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="articleOrder")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,17 +88,6 @@ class Order
         return $this;
     }
 
-    public function getArticleId(): ?Article
-    {
-        return $this->articleId;
-    }
-
-    public function setArticleId(Article $articleId): self
-    {
-        $this->articleId = $articleId;
-
-        return $this;
-    }
 
     public function getStripeToken(): ?string
     {
@@ -191,6 +181,18 @@ class Order
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
 
         return $this;
     }

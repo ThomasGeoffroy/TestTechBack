@@ -83,7 +83,7 @@ class ArticleManager
     {
         $order = new Order();
         $order->setUserId($user);
-        $order->setArticleId($article);
+        $order->setArticle($article);
         $order->setPrice($article->getPrice());
     
         // Check if 'stripeBrand' key exists in $ressource before accessing it.

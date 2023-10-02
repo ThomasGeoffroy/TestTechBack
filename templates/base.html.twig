@@ -12,45 +12,12 @@
         <!-- Bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
         <!-- Our custom CSS -->
-        <link rel="stylesheet" href="asset/css/style.css">
+        <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}">
         <!-- favicon -->
         <link rel="shortcut icon" href="" type="image/x-icon">
-        <style>
+    
+        <script src="https://js.stripe.com/v3"></script>
 
-            .StripeElement {
-                box-sizing: border-box;
-                height: 40px;
-                width: 100%;
-                padding: 10px 12px;
-                border: 1px solid transparent;
-                border-radius: 4px;
-                background-color: white;
-                box-shadow: 0 1px 3px #e6ebf1;
-                -webkit-transition: box-shadow 150ms ease;
-                transition: box-shadow 150ms ease;
-            }
-
-            .StripeElement--focus{
-                box-shadow: 0 1px 3px #cfd7df;
-             }
-
-            .StripeElement--invalid{
-                border-color: #0A9B01;
-            }
-
-            .StripeElement--webkit-autofill{
-                background-color: #fefde5 !important;
-            }
-        </style>
-        
-
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
 
         <title> {% block title %}Test TechBack{% endblock %}</title>
     </head>

@@ -28,7 +28,7 @@ class MainController extends AbstractController
             $purchasedArticles = $orderRepository->findPurchasedArticlesByUser($currentUser);
             
             $articleIds = array_map(function($order) {
-                return $order->getArticleId()->getId();
+                return $order->getArticle()->getId();
             }, $purchasedArticles);
 
             // dd($articleIds);

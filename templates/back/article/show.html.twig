@@ -3,6 +3,8 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
+<div class="container mt-3 mb-3">
+
     <h1>Article</h1>
 
     <table class="table">
@@ -38,9 +40,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_article_index') }}">back to list</a>
+    <a href="{{ path('app_back_article_index') }}" class="btn btn-primary">back to list</a>
 
-    <a href="{{ path('app_back_article_edit', {'id': article.id}) }}">edit</a>
+    <a href="{{ path('app_back_article_edit', {'id': article.id}) }}" class="btn btn-success">edit</a>
 
     {{ include('back/article/_delete_form.html.twig') }}
+</div>
 {% endblock %}

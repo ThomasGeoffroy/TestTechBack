@@ -27,3 +27,18 @@
 .StripeElement--webkit-autofill{
     background-color: #fefde5 !important;
 }
+
+.navigation {
+    margin-top: 20px;
+}
+
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.card-title {
+    border-color: black;
+}
+

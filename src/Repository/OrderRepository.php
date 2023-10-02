@@ -45,7 +45,7 @@ class OrderRepository extends ServiceEntityRepository
     public function findPurchasedArticlesByUser(User $user)
     {
         return $this->createQueryBuilder('o')
-            ->join('o.articleId', 'a')
+            ->join('o.article', 'a')
             ->where('o.userId = :user')
             ->setParameter('user', $user)
             ->getQuery()
